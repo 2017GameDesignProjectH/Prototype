@@ -57,8 +57,9 @@ public class NewBossScript : MonoBehaviour
         IsCircleSlash = false;
 
         // Play darkmist
-        DarkMist.transform.position = this.transform.position;
-        DarkMist.SetActive(true);
+        GameObject newMist = GameObject.Instantiate(DarkMist);
+        newMist.transform.position = this.transform.position;
+        newMist.SetActive(true);
     }
 
     public void DoSlash()

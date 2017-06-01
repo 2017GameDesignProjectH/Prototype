@@ -64,6 +64,7 @@ public class CameraScript : MonoBehaviour
 
     private void LateUpdate()
     {
+
         BossPlayerDistance = (Boss.position - Player.position).magnitude;
         if (AimMode)
         {
@@ -122,33 +123,5 @@ public class CameraScript : MonoBehaviour
             */
             camTransform.LookAt(Boss.position);
         }
-    }
-
-    public IEnumerator TransformCamera()
-    {
-        BossPlayerDistance = (Boss.position - Player.position).magnitude;
-        if (!Locked)
-        {
-            focaldistance = Recordfocaldistance;
-            Vector3 direction = new Vector3(0, 0, -focaldistance);
-            Quaternion rotation = Quaternion.Euler(currentY, currentX, 0);
-
-            camTransform.DOMove(Player.position + rotation * direction, 1f);
-            camTransform.LookAt(Player.position);
-        }
-        else
-        {
-            //currentY = Mathf.Clamp(BossPlayerDistance/3 + 1f, minY, maxY);
-            focaldistance = Mathf.Clamp(BossPlayerDistance / 3 + 1f, 0, maxfocalY);
-            Vector3 direction = (Boss.position - Player.position).normalized;
-            Vector3 fixY = new Vector3(0, Mathf.Clamp(BossPlayerDistance / 5, minY, maxY), 0);
-            direction.y = 0;
-            Quaternion rotation = Quaternion.Euler(currentY, currentX, 0);
-
-            camTransform.DOMove(Player.position - direction * focaldistance + fixY, 1f);
-            camTransform.LookAt(Boss.position);
-        }
-
-        yield return new WaitForSeconds(1);
     }
 }
